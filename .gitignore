@@ -8,6 +8,8 @@
 /gpt-webapp.core/.project
 /gpt-webapp.core/.settings/
 
+/gpt-webapp/gpt-webapp.core/src/main/resources/api.keys.properties
+
 /gpt-webapp.persistence/target/
 /gpt-webapp.persistence/.classpath
 /gpt-webapp.persistence/.project
