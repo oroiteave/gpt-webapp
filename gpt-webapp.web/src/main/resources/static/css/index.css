@@ -1,0 +1,178 @@
+@charset "ISO-8859-1";
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+.chat-container {
+     width: 500px; /* Cambia este valor según el ancho deseado */
+    max-width: 100%; /* Asegúrate de que no se desborde */
+    min-width: 300px; /* Tamaño mínimo para evitar que se haga demasiado pequeño */
+    min-height: 300px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    z-index: 1000;
+    resize: none; /* Deshabilitar el resize predeterminado del navegador */
+    overflow: hidden;
+}
+
+.chat-header {
+    background-color: #333;
+    padding: 15px;
+    border-bottom: 1px solid #444;
+    text-align: center;
+    font-size: 18px;
+    color: #ffffff;
+    cursor: move;
+}
+
+.chat-messages {
+    height: 400px;
+    overflow-y: auto;
+    padding: 15px;
+    background-color: #1e1e1e;
+    border-bottom: 1px solid #444;
+}
+
+.message {
+	display: inline-block;
+    margin: 10px 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 80%; /* Limita el ancho del mensaje a un 80% del contenedor */
+    word-wrap: break-word; /* Permite que las palabras largas se dividan en varias líneas */
+    word-break: break-all; /* Hace que las palabras largas también se corten si es necesario */
+    background-color: #333;
+    color: #e0e0e0;
+    clear: both;
+}
+
+.message.user {
+    background-color: #0d6efd;
+    color: #fff;
+     float: right;
+    margin-left: auto;
+}
+
+.message.bot {
+    background-color: #333;
+    color: #e0e0e0;
+    float: left;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    background-color: #333;
+    border-top: 1px solid #444;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #222;
+    color: #e0e0e0;
+}
+
+.chat-input button {
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0a58ca;
+}
+
+.dropdown-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Estilos del dropdown y formularios */
+.custom-dropdown {
+    width: 300px; /* Ajusta este valor según tus necesidades */
+    padding: 10px;
+    background-color: #1e1e1e;
+    border-color: #333;
+}
+
+.custom-dropdown .form-control {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.custom-dropdown .form-control:focus {
+    background-color: #444;
+    color: #fff;
+}
+
+#logoutBtn {
+    color: #fff; /* Color blanco para el texto */
+    background-color: #1e1e1e; /* Fondo oscuro para que coincida con el tema */
+}
+
+#logoutBtn:hover {
+    background-color: #444; /* Cambiar color de fondo al pasar el cursor */
+    color: #fff; /* Asegurarse de que el texto siga siendo blanco al hacer hover */
+}
+
+.chat-wrapper {
+    display: flex;
+    height: 100vh; /* Altura completa de la ventana */
+}
+
+/* Panel lateral para mostrar la lista de chats */
+.chat-list {
+    width: 200px; /* Ajusta el ancho según lo necesario para mostrar los títulos */
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    padding: 15px;
+    overflow-y: auto; /* Permitir scroll si hay muchos chats */
+    border-right: 1px solid #333;
+}
+
+.chat-list h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #fff;
+}
+
+.chat-list ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+}
+
+.chat-list li {
+    padding: 10px;
+    background-color: #333;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.chat-list li:hover {
+    background-color: #555;
+}
+
+#addChatBtn {
+    width: 100%; /* Para que el botón ocupe todo el ancho del panel */
+    padding: 10px;
+    font-size: 16px;
+}

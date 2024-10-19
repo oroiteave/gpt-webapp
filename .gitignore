@@ -1,0 +1,17 @@
+/gpt-webapp.web/target/
+/gpt-webapp.web/.classpath
+/gpt-webapp.web/.project
+/gpt-webapp.web/.settings/
+
+/gpt-webapp.core/target/
+/gpt-webapp.core/.classpath
+/gpt-webapp.core/.project
+/gpt-webapp.core/.settings/
+
+/gpt-webapp.persistence/target/
+/gpt-webapp.persistence/.classpath
+/gpt-webapp.persistence/.project
+/gpt-webapp.persistence/.settings/
+
+.project
+.settings/

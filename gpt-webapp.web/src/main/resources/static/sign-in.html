@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/sign-in.css">
+<title>Inicia sesión</title>
+</head>
+<body>
+	<div class="signin-container">
+	    <div class="signin-header">Iniciar Sesión</div>
+	    <form action ="/session/login" method="POST">
+	        <div class="form-group">
+	            <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico" required>
+	        </div>
+	        <div class="form-group">
+	            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+	        </div>
+	        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+	    </form>
+	    <br>
+        <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+	    <a href="/sign-up.html" class="signup-link">¿No tienes cuenta? Regístrate aquí</a>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="/js/sign-in"></script>
+	<script src="/js/session-error-handler.js"></script>
+</body>
+</html>
