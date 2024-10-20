@@ -3,12 +3,13 @@ function sendMessage(chatId) {
     const messageText = userMessageInput.value.trim();
     const params = new URLSearchParams();
     params.append("message",messageText);
+    params.append("chatId",chatId);
     
     if (messageText !== '') {
         // Agregar el mensaje del usuario al chat
         addMessageToChat(messageText, 'user',chatId);
 
-        fetch('/messages/test', {
+        fetch('/messages/sendPrompt', {
 		method: 'POST',
 		headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
@@ -17,10 +18,10 @@ function sendMessage(chatId) {
 		})
 		.then(response => response.text())
 		.then(data => {
-			addMessageToChat(data, 'bot',chatId);
+			addMessageToChat(data, 'assistant',chatId);
 		}).catch(error => console.error('Error fetching the test', error));
 
-        userMessageInput.value = ''; // Limpiar el campo de texto
+        userMessageInput.value = '';
     }
 }
 
@@ -34,9 +35,3 @@ function addMessageToChat(message, sender,chatId) {
     // Scroll automático hacia abajo para ver el último mensaje
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
-
-document.getElementById('userMessage').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            sendMessage();
-        }
-});

@@ -11,6 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +30,7 @@ public class MessagesController {
 	@Autowired
 	private ChatFacade chatFacade;
 	
-	@PostMapping("/sendMessage")
+	@PostMapping("/sendPrompt")
 	public ResponseEntity<String> sendMessage(@RequestParam String message, @RequestParam String chatId) throws JSONException {
 		Chat chat = chatFacade.getChatById(Long.parseLong(chatId));
 		
@@ -59,12 +61,17 @@ public class MessagesController {
 		messageFacade.saveMessage(gptMsg);
 		
 		
-		return ResponseEntity.ok(chatBotService.sendPrompt(messages,chat.getModel()));
+		return ResponseEntity.ok(choiceResponse);
 	}
 	
 	@PostMapping("/test")
 	public String testBotMessage() {
 		return "hola mundo";
+	}
+	
+	@GetMapping("/{chatId}/getMessages")
+	public ResponseEntity<List<Message>> getMessagesByChatId(@PathVariable Long chatId){
+		return ResponseEntity.ok(messageFacade.getMessagesByChatId(chatId));
 	}
 	
 }

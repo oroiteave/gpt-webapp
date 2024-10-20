@@ -61,7 +61,7 @@ body {
     margin-left: auto;
 }
 
-.message.bot {
+.message.assistant {
     background-color: #333;
     color: #e0e0e0;
     float: left;

@@ -40,6 +40,12 @@ function openChat(chatId) {
     sendButton.addEventListener('click', function() {
         sendMessage(chatId);
     });
+    
+    chatInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage(chatId);
+        }
+    });
 
     chatInputWrapper.appendChild(chatInput);
     chatInputWrapper.appendChild(sendButton);
@@ -52,4 +58,22 @@ function openChat(chatId) {
     
     // (Opcional) Aquí puedes hacer una petición para obtener los mensajes del chat y cargarlos
     loadMessages(chatId);
+}
+
+function loadMessages(chatId) {
+    const chatMessages = document.getElementById(`chat-messages-${chatId}`);
+    
+	fetch(`/messages/${chatId}/getMessages`)
+	.then(response => response.json())
+	.then(messages => {
+	    chatMessages.textContent = ''; // Limpiar el mensaje "Cargando..."
+		messages.forEach(message => {
+	    const newMessage = document.createElement('div');
+		newMessage.textContent = message.content;
+		newMessage.classList.add('message',message.role);
+	    chatMessages.appendChild(newMessage);
+	})	
+		
+		
+	}).catch(error => console.error('Error al cargar los mensajes: ', error));
 }
