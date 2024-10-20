@@ -34,4 +34,9 @@ public class DefaultChatFacade implements ChatFacade{
 	public long countChatsByUser(User user) {
 		return chatRepository.countByUser(user);
 	}
+
+	@Override
+	public void deleteById(Long chatId) {
+		chatRepository.delete(chatRepository.findById(chatId).get());
+	}
 }

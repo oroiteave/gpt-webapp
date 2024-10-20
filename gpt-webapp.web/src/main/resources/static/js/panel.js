@@ -37,20 +37,44 @@ function addChatToTop(chatId, chatTitle) {
     const editIcon = document.createElement('i');
     editIcon.classList.add('fas', 'fa-pencil-alt', 'edit-icon');
     editIcon.title = 'Editar chat';
+    
+    // Crear el ícono de basura (eliminación)
+    const deleteIcon = document.createElement('i');
+    deleteIcon.classList.add('fas', 'fa-trash-alt', 'delete-icon');
+    deleteIcon.title = 'Borrar chat';
 
     // Evitar que el clic en el ícono de lápiz abra el chat
     editIcon.addEventListener('click', function(event) {
         event.stopPropagation(); // Evitar que se dispare el evento del li
         enableTitleEditing(newChatItem); // Activar la edición del título
     });
+    
+    deleteIcon.addEventListener('click', function(event) {
+        event.stopPropagation(); // Evitar que se abra el chat cuando se hace clic en el ícono
+        const confirmDelete = confirm(`¿Estás seguro de que deseas eliminar el chat "${chatTitle}"?`);
+        if (confirmDelete) {
+            deleteChat(newChatItem);
+        }
+    });
 
     newChatItem.appendChild(editIcon);
+	newChatItem.appendChild(deleteIcon);
 
     newChatItem.addEventListener('click', function() {
         openChat(chatId); // Abrir el chat cuando se hace clic en el título
     });
 
     chatList.insertBefore(newChatItem, chatList.firstChild);
+}
+
+function deleteChat(chatItem) {
+    const chatId = chatItem.dataset.chatId;
+    chatItem.remove();
+
+	fetch(`/chat/delete?id=${chatId}`,{
+		method: 'DELETE'
+	}).catch(error => console.error('Error al eliminar el chat',error));
+    console.log(`Chat con ID ${chatId} eliminado`);
 }
 
 document.getElementById('addChatBtn').addEventListener('click', function() {
@@ -66,23 +90,16 @@ document.getElementById('addChatBtn').addEventListener('click', function() {
 });
 
 function enableTitleEditing(chatItem) {
-    // Obtener el ID del chat
-    const chatId = chatItem.dataset.chatId;
-    
-    // Obtener el título actual del chat
     const currentTitle = chatItem.firstChild.textContent.trim();
     
-    // Crear un input para editar el título
     const input = document.createElement('input');
     input.type = 'text';
     input.value = currentTitle;
     input.classList.add('edit-title-input');
 
-    // Reemplazar el título por el input
     chatItem.innerHTML = '';
     chatItem.appendChild(input);
 
-    // Al presionar "Enter", guardar el nuevo título
     input.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
             const newTitle = input.value.trim();
@@ -95,7 +112,6 @@ function enableTitleEditing(chatItem) {
         }
     });
 
-    // Cuando el input pierda el foco, también guardar el título
     input.addEventListener('blur', function() {
         const newTitle = input.value.trim();
         
@@ -106,39 +122,59 @@ function enableTitleEditing(chatItem) {
         }
     });
 
-    // Enfocar el input para que el usuario pueda comenzar a editar inmediatamente
     input.focus();
 }
 
-// Función para actualizar el título del chat en la UI y backend
 function updateChatTitle(chatItem, newTitle) {
-    // Restaurar el título en el <li> y volver a mostrar el icono de lápiz
-    chatItem.innerHTML = `${newTitle} <i class="fas fa-pencil-alt edit-icon" title="Editar chat"></i>`;
+    chatItem.innerHTML = `${newTitle}`;
 
-    // Añadir nuevamente el eventListener al icono de lápiz
-    chatItem.querySelector('.edit-icon').addEventListener('click', function() {
+    // Crear el ícono de edición (lápiz)
+    const editIcon = document.createElement('i');
+    editIcon.classList.add('fas', 'fa-pencil-alt', 'edit-icon');
+    editIcon.title = 'Editar chat';
+
+    // Crear el ícono de eliminación (basura)
+    const deleteIcon = document.createElement('i');
+    deleteIcon.classList.add('fas', 'fa-trash-alt', 'delete-icon');
+    deleteIcon.title = 'Borrar chat';
+
+    // Añadir el listener para editar el título
+    editIcon.addEventListener('click', function(event) {
+        event.stopPropagation();
         enableTitleEditing(chatItem);
     });
 
-    // Aquí puedes hacer una petición al backend para actualizar el título en la base de datos
+    // Añadir el listener para borrar el chat
+    deleteIcon.addEventListener('click', function(event) {
+        event.stopPropagation();
+        const confirmDelete = confirm(`¿Estás seguro de que deseas eliminar el chat "${newTitle}"?`);
+        if (confirmDelete) {
+            deleteChat(chatItem);
+        }
+    });
+
+    chatItem.appendChild(editIcon);
+    chatItem.appendChild(deleteIcon);
+
     const params = new URLSearchParams();
-    params.append("title",newTitle);
-    params.append("chatId",chatItem.dataset.chatId);
-    fetch('/chat/title',{
-		method: 'PUT',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded'
-		},
-		body: params.toString()
-	})
-    console.log(`Chat con ID ${chatItem.dataset.chatId} actualizado a: ${newTitle}`);
+    params.append("title", newTitle);
+    params.append("chatId", chatItem.dataset.chatId);
+    
+    fetch('/chat/title', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params.toString()
+    }).then(() => {
+        console.log(`Chat con ID ${chatItem.dataset.chatId} actualizado a: ${newTitle}`);
+    }).catch(error => console.error('Error actualizando el título:', error));
 }
 
-// Añadir eventListeners a todos los iconos de edición existentes
 document.querySelectorAll('.edit-icon').forEach(function(editIcon) {
-    const chatItem = editIcon.closest('li'); // El <li> correspondiente al chat
+    const chatItem = editIcon.closest('li');
     editIcon.addEventListener('click', function() {
-        enableTitleEditing(chatItem); // Activar la edición
+        enableTitleEditing(chatItem);
     });
 });
 
