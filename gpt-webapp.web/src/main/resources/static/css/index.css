@@ -177,15 +177,19 @@ body {
     font-size: 16px;
 }
 
-.edit-icon {
+.edit-icon, .delete-icon {
     margin-left: 10px;
     cursor: pointer;
     color: #ccc;
     float: right; /* Alinear el icono a la derecha */
 }
 
-.edit-icon:hover {
+.edit-icon:hover , .delete-icon:hover{
     color: #fff; /* Cambiar de color al pasar el cursor */
+}
+
+.delete-icon {
+    margin-left: 5px;
 }
 
 /* Estilo del input para editar el título del chat */

@@ -8,6 +8,7 @@ import org.gpt.webapp.core.facades.ChatFacade;
 import org.gpt.webapp.persistence.entities.Chat;
 import org.gpt.webapp.persistence.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -60,5 +61,10 @@ public class ChatController {
 		Chat chat = chatFacade.getChatById(Long.parseLong(chatId));
 		chat.setModel(model);
 		chatFacade.saveChat(chat);
+	}
+	
+	@DeleteMapping("/delete")
+	public void deleteChat(@RequestParam String id) {
+		chatFacade.deleteById(Long.parseLong(id));
 	}
 }

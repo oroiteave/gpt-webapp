@@ -10,4 +10,5 @@ public interface ChatFacade {
 	List<Chat> getChatsByUserId(Long userId);
 	Chat getChatById(Long chatId);
 	long countChatsByUser(User user);
+	void deleteById(Long chatId);
 }
