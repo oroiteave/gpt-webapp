@@ -176,3 +176,24 @@ body {
     padding: 10px;
     font-size: 16px;
 }
+
+.edit-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #ccc;
+    float: right; /* Alinear el icono a la derecha */
+}
+
+.edit-icon:hover {
+    color: #fff; /* Cambiar de color al pasar el cursor */
+}
+
+/* Estilo del input para editar el título del chat */
+.edit-title-input {
+    width: 80%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #333;
+    color: #fff;
+}
