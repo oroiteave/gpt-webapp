@@ -177,8 +177,3 @@ document.querySelectorAll('.edit-icon').forEach(function(editIcon) {
         enableTitleEditing(chatItem);
     });
 });
-
-function openChat(chatId) {
-    alert(`Abriendo chat con ID: ${chatId}`);
-    //todo
-}

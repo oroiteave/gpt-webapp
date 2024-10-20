@@ -17,16 +17,7 @@
 		        <button id="addChatBtn" class="btn btn-primary" style="margin-bottom: 15px;">Agregar Chat</button>
 		        <ul id="chatTitles"></ul>
 		    </div>
-			<div class="chat-container" id="chatContainer">
-			    <div class="chat-header" id="chatHeader">
-			        Chat con el Bot 🤖
-			    </div>
-			    <div class="chat-messages" id="chatMessages"></div>
-			    <div class="chat-input">
-			        <input type="text" id="userMessage" placeholder="Escribe un mensaje..." autocomplete="off">
-			        <button onclick="sendMessage()">Enviar</button>
-			    </div>
-			</div>
+			<div class="chat-containers-wrapper" id="chatContainersWrapper"></div>
 				
 			<div class="dropdown" style="position: absolute; top: 15px; right: 15px;">
 	            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,6 +46,7 @@
 		<script src="/js/drag-chat.js"></script>
 		<script src="/js/index-configurations.js"></script>
 		<script src="/js/panel.js"></script>
+		<script src="/js/chat.js"></script>
 	</body>
 	
 </html>
