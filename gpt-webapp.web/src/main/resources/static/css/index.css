@@ -201,3 +201,14 @@ body {
     background-color: #333;
     color: #fff;
 }
+
+.close-chat {
+    float: right;
+    margin-right: 10px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.close-chat:hover {
+    color: #ff5555;
+}
