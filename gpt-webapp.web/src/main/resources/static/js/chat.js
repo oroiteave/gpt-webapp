@@ -1,4 +1,4 @@
-function openChat(chatId) {
+function openChat(chatId,chatTitle) {
     const chatContainersWrapper = document.getElementById('chatContainersWrapper');
 
     // Verificar si ya existe un chat-container para este chat
@@ -16,7 +16,7 @@ function openChat(chatId) {
     // Crear el header del chat
     const chatHeader = document.createElement('div');
     chatHeader.classList.add('chat-header');
-    chatHeader.textContent = `Chat con ID: ${chatId}`;
+    chatHeader.textContent = `${chatTitle}`;
     
     const modelSelector = document.createElement('select');
     modelSelector.classList.add('model-selector');

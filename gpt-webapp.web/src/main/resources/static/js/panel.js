@@ -61,7 +61,7 @@ function addChatToTop(chatId, chatTitle) {
 	newChatItem.appendChild(deleteIcon);
 
     newChatItem.addEventListener('click', function() {
-        openChat(chatId); // Abrir el chat cuando se hace clic en el título
+        openChat(chatId,chatTitle); // Abrir el chat cuando se hace clic en el título
     });
 
     chatList.insertBefore(newChatItem, chatList.firstChild);

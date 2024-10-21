@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.gpt.webapp.core.services.ChatBotService;
 import org.gpt.webapp.persistence.entities.Message;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
