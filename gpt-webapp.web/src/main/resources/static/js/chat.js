@@ -69,6 +69,8 @@ function openChat(chatId) {
 
     // Añadir el nuevo contenedor de chat al chat-containers-wrapper
     chatContainersWrapper.appendChild(newChatContainer);
+    
+    centerChat(newChatContainer);
 
     // Aplicar la funcionalidad de arrastre a este nuevo contenedor
     addDragFeatureToAllChats();
@@ -77,6 +79,21 @@ function openChat(chatId) {
     loadMessages(chatId);
 }
 
+function centerChat(chatContainer) {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    const chatWidth = chatContainer.offsetWidth;
+    const chatHeight = chatContainer.offsetHeight;
+
+    // Calcular la posición para centrar el chat
+    const left = (windowWidth - chatWidth) / 2;
+    const top = (windowHeight - chatHeight) / 2;
+
+    // Aplicar la posición centrada al chat
+    chatContainer.style.left = `${left}px`;
+    chatContainer.style.top = `${top}px`;
+}
 // Función para cerrar el chat
 function closeChat(chatId) {
     const chatContainer = document.getElementById(`chat-container-${chatId}`);
