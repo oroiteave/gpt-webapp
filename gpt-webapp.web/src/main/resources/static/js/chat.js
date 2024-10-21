@@ -17,7 +17,7 @@ function openChat(chatId,chatTitle) {
     const chatHeader = document.createElement('div');
     chatHeader.classList.add('chat-header');
     
-    
+    // Crear el model selector
     const modelSelector = document.createElement('select');
     modelSelector.classList.add('model-selector');
     modelSelector.title = 'Selecciona el modelo';
@@ -90,17 +90,6 @@ function openChat(chatId,chatTitle) {
     const sendButton = document.createElement('button');
     sendButton.textContent = 'Enviar';
 
-    // Evento para enviar el mensaje al hacer clic en el botón
-    sendButton.addEventListener('click', function() {
-        sendMessage(chatId);
-    });
-
-    // Evento para enviar el mensaje al presionar "Enter"
-    chatInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            sendMessage(chatId);
-        }
-    });
 
     chatInputWrapper.appendChild(chatInput);
     chatInputWrapper.appendChild(sendButton);
@@ -133,6 +122,7 @@ function openChat(chatId,chatTitle) {
             console.error('Error al cargar el modelo: ', error);
         });
         
+    setupMessageListeners(chatId);
 
     // (Opcional) Aquí puedes hacer una petición para obtener los mensajes del chat y cargarlos
     loadMessages(chatId);

@@ -32,7 +32,6 @@ public class DefaultChatBotService implements ChatBotService{
                 + "\"model\": \"" + model + "\","
                 + "\"messages\": [" + requestBodyMessages + "]"
                 + "}";
-		
 		return webClient.post()
                 .uri("https://api.openai.com/v1/chat/completions")
                 .header("Authorization", "Bearer " + token)
