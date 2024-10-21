@@ -18,6 +18,40 @@ function openChat(chatId) {
     chatHeader.classList.add('chat-header');
     chatHeader.textContent = `Chat con ID: ${chatId}`;
     
+    const modelSelector = document.createElement('select');
+    modelSelector.classList.add('model-selector');
+    modelSelector.title = 'Selecciona el modelo';
+
+    // Opciones del selector de modelos
+    const models = ['gpt-3.5-turbo', 'gpt-4o', 'gpt-4o-mini','gpt-4-turbo'];
+    models.forEach(model => {
+        const option = document.createElement('option');
+        option.value = model;
+        option.textContent = model;
+        modelSelector.appendChild(option);
+    });
+
+    // Evento para manejar el cambio de modelo
+    modelSelector.addEventListener('change', function() {
+		const params = new URLSearchParams();
+		params.append("model",modelSelector.value);
+		params.append("chatId",chatId);
+        fetch('/chat/model', {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+	        body: params.toString()
+		})
+		.catch(error => {
+			console.error("Error al cambiar el modelo: ",error);
+		});
+        
+    });
+
+    // Añadir el selector de modelos al header (a la izquierda)
+    chatHeader.appendChild(modelSelector);
+    
     // Crear el ícono de cerrar (X)
     const closeButton = document.createElement('i');
     closeButton.classList.add('fas', 'fa-times', 'close-chat');
@@ -74,6 +108,25 @@ function openChat(chatId) {
 
     // Aplicar la funcionalidad de arrastre a este nuevo contenedor
     addDragFeatureToAllChats();
+    
+    fetch(`/chat/${chatId}/model`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error al obtener el modelo del chat con ID ${chatId}`);
+            }
+            return response.text(); // El modelo se devuelve como texto plano
+        })
+        .then(model => {
+            if (models.includes(model)) {
+                modelSelector.value = model; // Seleccionar el modelo correcto en el selector
+                console.log(`Modelo cargado desde el backend para el chat ${chatId}: ${model}`);
+            } else {
+                console.warn(`El modelo "${model}" no está en la lista de opciones.`);
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar el modelo: ', error);
+        });
 
     // (Opcional) Aquí puedes hacer una petición para obtener los mensajes del chat y cargarlos
     loadMessages(chatId);
