@@ -132,6 +132,7 @@ function openChat(chatId,chatTitle) {
         .catch(error => {
             console.error('Error al cargar el modelo: ', error);
         });
+        
 
     // (Opcional) Aquí puedes hacer una petición para obtener los mensajes del chat y cargarlos
     loadMessages(chatId);
@@ -170,10 +171,11 @@ function loadMessages(chatId) {
 	.then(messages => {
 	    chatMessages.textContent = '';
 		messages.forEach(message => {
-	    const newMessage = document.createElement('div');
-		newMessage.textContent = message.content;
-		newMessage.classList.add('message',message.role);
-	    chatMessages.appendChild(newMessage);
-	});	
+		    const newMessage = document.createElement('div');
+			newMessage.textContent = message.content;
+			newMessage.classList.add('message',message.role);
+		    chatMessages.appendChild(newMessage);
+		});	
+		chatMessages.scrollTop = chatMessages.scrollHeight;
 	}).catch(error => console.error('Error al cargar los mensajes: ', error));
 }
