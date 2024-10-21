@@ -56,14 +56,14 @@ public class ApiUtilTest {
 	
     @Test
     public void testSendChatRequest() throws JSONException {
-    	String response = chatBotService.sendPrompt(messagesTest,chatTest.getModel());
+    	String response = chatBotService.sendPrompt(messagesTest,chatTest.getModel(), "token");
     	
     	assertNotNull(response);
     }
     
     @Test
     public void testShouldChatWithContext()throws JSONException{
-    	String response = chatBotService.sendPrompt(messagesTest,chatTest.getModel());
+    	String response = chatBotService.sendPrompt(messagesTest,chatTest.getModel(),"token");
     	
     	assertNotNull(response);
     	
@@ -84,7 +84,7 @@ public class ApiUtilTest {
 	 	messagesTest.add(gptReturn);
 	 	messagesTest.add(userResponse);
 	 	
-	 	String response1 = chatBotService.sendPrompt(messagesTest,chatTest.getModel());
+	 	String response1 = chatBotService.sendPrompt(messagesTest,chatTest.getModel(),"token");
 	 	obj = new JSONObject(response1);
 	 	message1 = obj.getJSONArray("choices").getJSONObject(0).getJSONObject("message");
 	 	String gptmessage1 = message1.getString("content");

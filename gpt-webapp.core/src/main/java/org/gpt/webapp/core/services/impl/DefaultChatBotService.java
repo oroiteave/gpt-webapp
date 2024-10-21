@@ -14,15 +14,12 @@ public class DefaultChatBotService implements ChatBotService{
 
 	private final WebClient webClient;
 	
-	@Value("${api.key}")
-    private String API_KEY;
-	
 	public DefaultChatBotService(WebClient webClient) {
 		this.webClient = webClient;
 	}
 	
 	@Override
-	public String sendPrompt(List<Message> messages, String model) {
+	public String sendPrompt(List<Message> messages, String model, String token) {
 		List<String> allMessages = new ArrayList<>();
 		String requestBodyMessages= "";
 		
@@ -39,7 +36,7 @@ public class DefaultChatBotService implements ChatBotService{
 		
 		return webClient.post()
                 .uri("https://api.openai.com/v1/chat/completions")
-                .header("Authorization", "Bearer " + API_KEY)
+                .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json")
                 .bodyValue(requestBody)
                 .retrieve()
