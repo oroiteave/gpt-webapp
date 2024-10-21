@@ -16,7 +16,7 @@ function openChat(chatId,chatTitle) {
     // Crear el header del chat
     const chatHeader = document.createElement('div');
     chatHeader.classList.add('chat-header');
-    chatHeader.textContent = `${chatTitle}`;
+    
     
     const modelSelector = document.createElement('select');
     modelSelector.classList.add('model-selector');
@@ -51,6 +51,11 @@ function openChat(chatId,chatTitle) {
 
     // Añadir el selector de modelos al header (a la izquierda)
     chatHeader.appendChild(modelSelector);
+    
+    const headerTitle = document.createElement('div');
+    headerTitle.classList.add('chat-title');
+    headerTitle.textContent = `${chatTitle}`;
+    chatHeader.appendChild(headerTitle);
     
     // Crear el ícono de cerrar (X)
     const closeButton = document.createElement('i');

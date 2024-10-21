@@ -25,12 +25,20 @@ body {
 
 .chat-header {
     background-color: #333;
-    padding: 15px;
-    border-bottom: 1px solid #444;
+    padding: 10px;
+    color: white;
+    position: relative;
+    cursor: move; /* Habilita mover el chat */
+    display: flex;
+    justify-content: space-between; /* Espacia el selector y el botón de cerrar */
+    align-items: center;
+}
+
+.chat-title {
+    flex-grow: 1;
     text-align: center;
-    font-size: 18px;
-    color: #ffffff;
-    cursor: move;
+    font-weight: bold;
+    margin-left: 10px; /* Ajustar para espacio entre el selector y el título */
 }
 
 .chat-messages {
@@ -203,9 +211,7 @@ body {
 }
 
 .close-chat {
-    float: right;
-    margin-right: 10px;
-    cursor: pointer;
+     cursor: pointer;
     color: #ccc;
 }
 
@@ -214,7 +220,6 @@ body {
 }
 
 .model-selector {
-    float: left;
     margin-right: 10px;
     background-color: #333;
     color: #fff;
