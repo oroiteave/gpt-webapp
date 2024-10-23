@@ -95,7 +95,7 @@ body {
     margin: 10px 0;
     border: 1px solid #444;
     border-radius: 5px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     background-color: #2d2d2d;
 }
 
@@ -109,6 +109,10 @@ body {
     border-bottom: 1px solid #444;
     text-transform: uppercase;
     font-family: Arial, sans-serif;
+}
+
+.code-block pre, .code-block code {
+    line-height: 1.8;
 }
 
 .chat-input {

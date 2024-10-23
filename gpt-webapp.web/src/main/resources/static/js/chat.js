@@ -161,10 +161,7 @@ function loadMessages(chatId) {
 	.then(messages => {
 	    chatMessages.textContent = '';
 		messages.forEach(message => {
-		    const newMessage = document.createElement('div');
-			newMessage.textContent = message.content;
-			newMessage.classList.add('message',message.role);
-		    chatMessages.appendChild(newMessage);
+		    addMessageToChat(message.content, message.role, chatId);
 		});	
 		chatMessages.scrollTop = chatMessages.scrollHeight;
 	}).catch(error => console.error('Error al cargar los mensajes: ', error));
