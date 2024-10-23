@@ -2,6 +2,8 @@ package org.gpt.webapp.persistence.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Chat {
     private User user;
 	
 	@OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Message> messages;
 	
 	private String title;
