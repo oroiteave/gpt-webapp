@@ -34,16 +34,92 @@ function sendMessage(chatId) {
     }
 }
 
-function addMessageToChat(message, sender,chatId) {
+function addMessageToChat(message, sender, chatId) {
     const chatMessages = document.getElementById(`chat-messages-${chatId}`);
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', sender);
-    messageElement.textContent = message;
+
+    // Procesar el mensaje para detectar bloques de código
+    const messageParts = parseMessageWithCodeBlocks(message);
+
+    // Crear elementos para cada parte del mensaje
+    messageParts.forEach(part => {
+        if (part.type === 'text') {
+            const textElement = document.createElement('span');
+            textElement.textContent = part.content;
+            messageElement.appendChild(textElement);
+        } else if (part.type === 'code') {
+            // Crear un contenedor para el bloque de código
+            const codeContainer = document.createElement('div');
+            codeContainer.classList.add('code-block');
+
+            // Crear un encabezado para el bloque de código
+            const codeHeader = document.createElement('div');
+            codeHeader.classList.add('code-header');
+            codeHeader.textContent = part.language ? part.language : 'Code';
+            codeContainer.appendChild(codeHeader);
+
+            const codeElement = document.createElement('pre');
+            const codeContent = document.createElement('code');
+            codeContent.textContent = part.content;
+
+            // Asignar clase de lenguaje si está presente
+            if (part.language) {
+                codeContent.classList.add(`language-${part.language}`);
+            }
+
+            codeElement.appendChild(codeContent);
+            codeContainer.appendChild(codeElement);
+            messageElement.appendChild(codeContainer);
+
+            // Aplicar resaltado de sintaxis
+            hljs.highlightElement(codeContent);
+        }
+    });
+
     chatMessages.appendChild(messageElement);
 
     // Scroll automático hacia abajo para ver el último mensaje
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+
+// Función para analizar el mensaje y separar texto y bloques de código
+function parseMessageWithCodeBlocks(message) {
+    const parts = [];
+    const codeBlockRegex = /```(\w+)?\s*([\s\S]*?)```/g;
+    let lastIndex = 0;
+    let match;
+
+    while ((match = codeBlockRegex.exec(message)) !== null) {
+        // Texto antes del bloque de código
+        if (match.index > lastIndex) {
+            parts.push({
+                type: 'text',
+                content: message.substring(lastIndex, match.index)
+            });
+        }
+
+        // Bloque de código con lenguaje opcional
+        parts.push({
+            type: 'code',
+            content: match[2],
+            language: match[1] || ''
+        });
+
+        lastIndex = codeBlockRegex.lastIndex;
+    }
+
+    // Texto después del último bloque de código
+    if (lastIndex < message.length) {
+        parts.push({
+            type: 'text',
+            content: message.substring(lastIndex)
+        });
+    }
+
+    return parts;
+}
+
 
 function setupMessageListeners(chatId) {
     const messageInput = document.getElementById(`chat-input-${chatId}`);
