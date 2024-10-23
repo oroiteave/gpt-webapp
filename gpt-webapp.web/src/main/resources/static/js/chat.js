@@ -1,29 +1,72 @@
-function openChat(chatId,chatTitle) {
+function openChat(chatId, chatTitle) {
     const chatContainersWrapper = document.getElementById('chatContainersWrapper');
 
-    // Verificar si ya existe un chat-container para este chat
     if (document.getElementById(`chat-container-${chatId}`)) {
         alert(`El chat con ID ${chatId} ya está abierto.`);
         return;
     }
 
-    // Crear un nuevo contenedor para el chat
-    const newChatContainer = document.createElement('div');
-    newChatContainer.classList.add('chat-container');
-    newChatContainer.id = `chat-container-${chatId}`; // Asignar un ID único basado en el chatId
-    newChatContainer.style.position = 'absolute'; // Necesario para que se pueda arrastrar
+    const models = ['gpt-3.5-turbo', 'gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo'];
 
-    // Crear el header del chat
+    const newChatContainer = createChatContainer(chatId);
+
+    const { chatHeader, modelSelector } = createChatHeader(chatId, chatTitle, models);
+    newChatContainer.appendChild(chatHeader);
+
+    const chatMessages = createChatMessagesArea(chatId);
+    newChatContainer.appendChild(chatMessages);
+
+    const chatInputWrapper = createChatInputArea(chatId);
+    newChatContainer.appendChild(chatInputWrapper);
+
+    chatContainersWrapper.appendChild(newChatContainer);
+
+    centerChat(newChatContainer);
+
+    addDragFeatureToAllChats();
+
+    loadChatModel(chatId, modelSelector, models);
+
+    setupMessageListeners(chatId);
+
+    loadMessages(chatId);
+}
+
+function createChatContainer(chatId) {
+    const chatContainer = document.createElement('div');
+    chatContainer.classList.add('chat-container');
+    chatContainer.id = `chat-container-${chatId}`; // Asignar un ID único basado en el chatId
+    chatContainer.style.position = 'absolute'; // Necesario para que se pueda arrastrar
+    return chatContainer;
+}
+
+function createChatHeader(chatId, chatTitle, models) {
     const chatHeader = document.createElement('div');
     chatHeader.classList.add('chat-header');
-    
-    // Crear el model selector
+
+    // Crear el selector de modelo y añadirlo al encabezado
+    const modelSelector = createModelSelector(chatId, models);
+    chatHeader.appendChild(modelSelector);
+
+    // Crear el título del chat y añadirlo al encabezado
+    const headerTitle = document.createElement('div');
+    headerTitle.classList.add('chat-title');
+    headerTitle.textContent = chatTitle;
+    chatHeader.appendChild(headerTitle);
+
+    // Crear el botón de cerrar y añadirlo al encabezado
+    const closeButton = createCloseButton(chatId);
+    chatHeader.appendChild(closeButton);
+
+    // Retornar el encabezado y el selector de modelo para uso posterior
+    return { chatHeader, modelSelector };
+}
+
+function createModelSelector(chatId, models) {
     const modelSelector = document.createElement('select');
     modelSelector.classList.add('model-selector');
     modelSelector.title = 'Selecciona el modelo';
 
-    // Opciones del selector de modelos
-    const models = ['gpt-3.5-turbo', 'gpt-4o', 'gpt-4o-mini','gpt-4-turbo'];
     models.forEach(model => {
         const option = document.createElement('option');
         option.value = model;
@@ -31,84 +74,70 @@ function openChat(chatId,chatTitle) {
         modelSelector.appendChild(option);
     });
 
-    // Evento para manejar el cambio de modelo
-    modelSelector.addEventListener('change', function() {
-		const params = new URLSearchParams();
-		params.append("model",modelSelector.value);
-		params.append("chatId",chatId);
+    modelSelector.addEventListener('change', function () {
+        const params = new URLSearchParams();
+        params.append("model", modelSelector.value);
+        params.append("chatId", chatId);
         fetch('/chat/model', {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-	        body: params.toString()
-		})
-		.catch(error => {
-			console.error("Error al cambiar el modelo: ",error);
-		});
-        
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: params.toString()
+        })
+        .catch(error => {
+            console.error("Error al cambiar el modelo: ", error);
+        });
     });
 
-    // Añadir el selector de modelos al header (a la izquierda)
-    chatHeader.appendChild(modelSelector);
-    
-    const headerTitle = document.createElement('div');
-    headerTitle.classList.add('chat-title');
-    headerTitle.textContent = `${chatTitle}`;
-    chatHeader.appendChild(headerTitle);
-    
-    // Crear el ícono de cerrar (X)
+    return modelSelector;
+}
+
+function createCloseButton(chatId) {
     const closeButton = document.createElement('i');
     closeButton.classList.add('fas', 'fa-times', 'close-chat');
     closeButton.title = 'Cerrar chat';
-    
-    // Evento para cerrar el chat
-    closeButton.addEventListener('click', function() {
+
+    closeButton.addEventListener('click', function () {
         closeChat(chatId);
     });
-    
-    // Añadir el botón de cerrar al header
-    chatHeader.appendChild(closeButton);
-    
-    newChatContainer.appendChild(chatHeader);
 
-    // Crear el área de mensajes
+    return closeButton;
+}
+
+function createChatMessagesArea(chatId) {
     const chatMessages = document.createElement('div');
     chatMessages.classList.add('chat-messages');
     chatMessages.id = `chat-messages-${chatId}`;
-    chatMessages.textContent = 'Cargando mensajes...'; // Puedes hacer una petición aquí para obtener los mensajes reales
-    newChatContainer.appendChild(chatMessages);
+    chatMessages.textContent = 'Cargando mensajes...'; // Aquí puedes cargar los mensajes reales
+    return chatMessages;
+}
 
-    // Crear el input para enviar mensajes
+function createChatInputArea(chatId) {
     const chatInputWrapper = document.createElement('div');
     chatInputWrapper.classList.add('chat-input');
+
     const chatInput = document.createElement('input');
     chatInput.type = 'text';
     chatInput.placeholder = 'Escribe un mensaje...';
     chatInput.id = `chat-input-${chatId}`;
-    
+
     const sendButton = document.createElement('button');
     sendButton.textContent = 'Enviar';
 
-
     chatInputWrapper.appendChild(chatInput);
     chatInputWrapper.appendChild(sendButton);
-    newChatContainer.appendChild(chatInputWrapper);
 
-    // Añadir el nuevo contenedor de chat al chat-containers-wrapper
-    chatContainersWrapper.appendChild(newChatContainer);
-    
-    centerChat(newChatContainer);
+    return chatInputWrapper;
+}
 
-    // Aplicar la funcionalidad de arrastre a este nuevo contenedor
-    addDragFeatureToAllChats();
-    
+function loadChatModel(chatId, modelSelector, models) {
     fetch(`/chat/${chatId}/model`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error al obtener el modelo del chat con ID ${chatId}`);
             }
-            return response.text(); // El modelo se devuelve como texto plano
+            return response.text();
         })
         .then(model => {
             if (models.includes(model)) {
@@ -121,11 +150,6 @@ function openChat(chatId,chatTitle) {
         .catch(error => {
             console.error('Error al cargar el modelo: ', error);
         });
-        
-    setupMessageListeners(chatId);
-
-    // (Opcional) Aquí puedes hacer una petición para obtener los mensajes del chat y cargarlos
-    loadMessages(chatId);
 }
 
 function centerChat(chatContainer) {
@@ -135,23 +159,20 @@ function centerChat(chatContainer) {
     const chatWidth = chatContainer.offsetWidth;
     const chatHeight = chatContainer.offsetHeight;
 
-    // Calcular la posición para centrar el chat
     const left = (windowWidth - chatWidth) / 2;
     const top = (windowHeight - chatHeight) / 2;
 
-    // Aplicar la posición centrada al chat
     chatContainer.style.left = `${left}px`;
     chatContainer.style.top = `${top}px`;
 }
-// Función para cerrar el chat
+
 function closeChat(chatId) {
     const chatContainer = document.getElementById(`chat-container-${chatId}`);
     if (chatContainer) {
-        chatContainer.remove(); // Elimina el contenedor del chat de la interfaz
+        chatContainer.remove();
         console.log(`Chat con ID ${chatId} cerrado.`);
     }
 }
-
 
 function loadMessages(chatId) {
     const chatMessages = document.getElementById(`chat-messages-${chatId}`);
