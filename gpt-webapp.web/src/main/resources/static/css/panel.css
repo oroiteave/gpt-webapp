@@ -1,0 +1,124 @@
+/* panel.css */
+
+@charset "ISO-8859-1";
+
+/* Estilos generales */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+/* Contenedor principal que envuelve el panel y los chats */
+.chat-wrapper {
+    display: flex;
+    height: 100vh; /* Altura completa de la ventana */
+}
+
+/* Panel lateral para mostrar la lista de chats */
+.chat-list {
+    width: 200px; /* Ajusta el ancho según lo necesario para mostrar los títulos */
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    padding: 15px;
+    overflow-y: auto; /* Permitir scroll si hay muchos chats */
+    border-right: 1px solid #333;
+}
+
+.chat-list h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #fff;
+}
+
+.chat-list ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+}
+
+.chat-list li {
+    padding: 10px;
+    background-color: #333;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.chat-list li:hover {
+    background-color: #555;
+}
+
+#addChatBtn {
+    width: 100%; /* Para que el botón ocupe todo el ancho del panel */
+    padding: 10px;
+    font-size: 16px;
+}
+
+.edit-icon, .delete-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #ccc;
+    float: right; /* Alinear el icono a la derecha */
+}
+
+.edit-icon:hover , .delete-icon:hover{
+    color: #fff; /* Cambiar de color al pasar el cursor */
+}
+
+.delete-icon {
+    margin-left: 5px;
+}
+
+/* Estilo del input para editar el título del chat */
+.edit-title-input {
+    width: 80%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #333;
+    color: #fff;
+}
+
+#addChatBtn:hover {
+    background-color: #0a58ca;
+}
+
+/* Botón de logout */
+#logoutBtn {
+    color: #fff; /* Color blanco para el texto */
+    background-color: #1e1e1e; /* Fondo oscuro para que coincida con el tema */
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+#logoutBtn:hover {
+    background-color: #444; /* Cambiar color de fondo al pasar el cursor */
+    color: #fff; /* Asegurarse de que el texto siga siendo blanco al hacer hover */
+}
+
+/* Estilos adicionales si tienes un dropdown o formularios en el panel */
+.custom-dropdown {
+    width: 100%;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border: none;
+}
+
+.custom-dropdown .form-control {
+    background-color: #333;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.custom-dropdown .form-control:focus {
+    background-color: #444;
+    color: #fff;
+    outline: none;
+}

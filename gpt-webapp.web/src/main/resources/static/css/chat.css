@@ -1,0 +1,91 @@
+/* chat-container.css */
+
+/* Contenedor del chat */
+.chat-container {
+    width: 500px; /* Cambia este valor según el ancho deseado */
+    max-width: 100%; /* Asegúrate de que no se desborde */
+    min-width: 300px; /* Tamaño mínimo para evitar que se haga demasiado pequeño */
+    min-height: 300px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    z-index: 1000;
+    resize: none; /* Deshabilitar el resize predeterminado del navegador */
+    overflow: hidden;
+}
+
+.chat-header {
+    position: relative; /* Necesario para que los hijos con posición absoluta se posicionen respecto a este contenedor */
+    background-color: #333;
+    padding: 10px;
+    color: white;
+    cursor: move;
+    height: 40px;
+}
+
+.chat-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%; /* Ajusta este valor según sea necesario */
+}
+
+.close-chat {
+    position: absolute;
+    right: 10px; /* Posiciona el botón de cerrar a la derecha */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #ccc;
+}
+
+.close-chat:hover {
+    color: #ff5555;
+}
+
+.model-selector {
+    position: absolute;
+    left: 10px; /* Posiciona el selector a la izquierda */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: #fff;
+}
+
+/* Área de entrada de mensajes */
+.chat-input {
+    display: flex;
+    padding: 10px;
+    background-color: #333;
+    border-top: 1px solid #444;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #222;
+    color: #e0e0e0;
+}
+
+.chat-input button {
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0a58ca;
+}
