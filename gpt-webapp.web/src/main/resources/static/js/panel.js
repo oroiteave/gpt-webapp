@@ -34,6 +34,7 @@ function addChatToTop(chatId, chatTitle) {
     
     // Crear el span para el título
     const titleSpan = document.createElement('span');
+    titleSpan.classList.add('chat-item-title');
     titleSpan.textContent = chatTitle;
     newChatItem.appendChild(titleSpan);
     
@@ -105,7 +106,7 @@ function enableTitleEditing(chatItem) {
     input.type = 'text';
     input.value = currentTitle;
     input.classList.add('edit-title-input');
-    input.maxLength = 15;
+    input.maxLength = 20;
 
     // Reemplazar el titleSpan con el input
     chatItem.replaceChild(input, titleSpan);
@@ -144,6 +145,7 @@ function updateChatTitle(chatItem, newTitle) {
     const input = chatItem.querySelector('input');
     const titleSpan = document.createElement('span');
     titleSpan.textContent = newTitle;
+    titleSpan.classList.add('chat-item-title');
 
     if (input && chatItem.contains(input)) {
         // Reemplazar el input con el titleSpan
