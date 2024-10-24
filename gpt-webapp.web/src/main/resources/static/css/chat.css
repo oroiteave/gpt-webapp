@@ -1,8 +1,11 @@
 /* chat-container.css */
-
+* {
+    box-sizing: border-box;
+}
 /* Contenedor del chat */
 .chat-container {
     width: 500px; /* Cambia este valor según el ancho deseado */
+    height: 600px;
     max-width: 100%; /* Asegúrate de que no se desborde */
     min-width: 300px; /* Tamaño mínimo para evitar que se haga demasiado pequeño */
     min-height: 300px;
@@ -16,6 +19,8 @@
     z-index: 1000;
     resize: none; /* Deshabilitar el resize predeterminado del navegador */
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat-header {
@@ -24,7 +29,9 @@
     padding: 10px;
     color: white;
     cursor: move;
+    flex: 0 0 auto;
     height: 40px;
+     z-index: 2;
 }
 
 .chat-title {
@@ -65,6 +72,8 @@
     padding: 10px;
     background-color: #333;
     border-top: 1px solid #444;
+    flex: 0 0 auto;
+    height: 60px;
 }
 
 .chat-input input {

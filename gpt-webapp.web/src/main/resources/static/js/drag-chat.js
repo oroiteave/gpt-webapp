@@ -6,15 +6,20 @@ document.addEventListener('DOMContentLoaded', function() {
 // Función que añade funcionalidad de arrastre a los nuevos chats
 function addDragFeatureToAllChats() {
     const chatContainers = document.querySelectorAll('.chat-container');
-    
+
     chatContainers.forEach(chatContainer => {
         const chatHeader = chatContainer.querySelector('.chat-header');
-        
+
         let isDragging = false;
         let initialX = 0, initialY = 0;
         let offsetX = 0, offsetY = 0;
 
         chatHeader.addEventListener('mousedown', function(e) {
+            // Verificar si estamos redimensionando
+            if (e.target.closest('.resizer')) {
+                return; // No hacer nada si estamos en un resizer
+            }
+
             isDragging = true;
 
             // Guardar la posición inicial del mouse

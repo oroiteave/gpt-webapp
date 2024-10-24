@@ -9,6 +9,7 @@ function openChat(chatId, chatTitle) {
     const models = ['gpt-3.5-turbo', 'gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo'];
 
     const newChatContainer = createChatContainer(chatId);
+    
 
     const { chatHeader, modelSelector } = createChatHeader(chatId, chatTitle, models);
     newChatContainer.appendChild(chatHeader);
@@ -20,6 +21,8 @@ function openChat(chatId, chatTitle) {
     newChatContainer.appendChild(chatInputWrapper);
 
     chatContainersWrapper.appendChild(newChatContainer);
+    addResizeHandles(newChatContainer);
+    addResizeFeatureToChat(newChatContainer);
 
     centerChat(newChatContainer);
 
@@ -38,6 +41,112 @@ function createChatContainer(chatId) {
     chatContainer.id = `chat-container-${chatId}`; // Asignar un ID único basado en el chatId
     chatContainer.style.position = 'absolute'; // Necesario para que se pueda arrastrar
     return chatContainer;
+}
+
+function addResizeFeatureToChat(chatContainer) {
+    const resizers = chatContainer.querySelectorAll('.resizer');
+    let originalWidth = 0;
+    let originalHeight = 0;
+    let originalX = 0;
+    let originalY = 0;
+    let originalMouseX = 0;
+    let originalMouseY = 0;
+
+    resizers.forEach(function(resizer) {
+        resizer.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            e.stopPropagation(); // Evitar conflictos con el arrastre
+
+            originalWidth = parseFloat(getComputedStyle(chatContainer, null).getPropertyValue('width').replace('px', ''));
+            originalHeight = parseFloat(getComputedStyle(chatContainer, null).getPropertyValue('height').replace('px', ''));
+            originalX = chatContainer.getBoundingClientRect().left;
+            originalY = chatContainer.getBoundingClientRect().top;
+            originalMouseX = e.clientX;
+            originalMouseY = e.clientY;
+
+            window.addEventListener('mousemove', resize);
+            window.addEventListener('mouseup', stopResize);
+
+            function resize(e) {
+                if (resizer.classList.contains('bottom-right')) {
+                    const width = originalWidth + (e.clientX - originalMouseX);
+                    const height = originalHeight + (e.clientY - originalMouseY);
+                    chatContainer.style.width = width + 'px';
+                    chatContainer.style.height = height + 'px';
+                }
+                else if (resizer.classList.contains('bottom-left')) {
+                    const width = originalWidth - (e.clientX - originalMouseX);
+                    const height = originalHeight + (e.clientY - originalMouseY);
+                    chatContainer.style.width = width + 'px';
+                    chatContainer.style.height = height + 'px';
+                    chatContainer.style.left = originalX + (e.clientX - originalMouseX) + 'px';
+                }
+                else if (resizer.classList.contains('top-right')) {
+                    const width = originalWidth + (e.clientX - originalMouseX);
+                    const height = originalHeight - (e.clientY - originalMouseY);
+                    chatContainer.style.width = width + 'px';
+                    chatContainer.style.height = height + 'px';
+                    chatContainer.style.top = originalY + (e.clientY - originalMouseY) + 'px';
+                }
+                else if (resizer.classList.contains('top-left')) {
+                    const width = originalWidth - (e.clientX - originalMouseX);
+                    const height = originalHeight - (e.clientY - originalMouseY);
+                    chatContainer.style.width = width + 'px';
+                    chatContainer.style.height = height + 'px';
+                    chatContainer.style.left = originalX + (e.clientX - originalMouseX) + 'px';
+                    chatContainer.style.top = originalY + (e.clientY - originalMouseY) + 'px';
+                }
+                else if (resizer.classList.contains('top')) {
+                    const height = originalHeight - (e.clientY - originalMouseY);
+                    chatContainer.style.height = height + 'px';
+                    chatContainer.style.top = originalY + (e.clientY - originalMouseY) + 'px';
+                }
+                else if (resizer.classList.contains('bottom')) {
+                    const height = originalHeight + (e.clientY - originalMouseY);
+                    chatContainer.style.height = height + 'px';
+                }
+                else if (resizer.classList.contains('right')) {
+                    const width = originalWidth + (e.clientX - originalMouseX);
+                    chatContainer.style.width = width + 'px';
+                }
+                else if (resizer.classList.contains('left')) {
+                    const width = originalWidth - (e.clientX - originalMouseX);
+                    chatContainer.style.width = width + 'px';
+                    chatContainer.style.left = originalX + (e.clientX - originalMouseX) + 'px';
+                }
+
+                // Opcional: establecer dimensiones mínimas
+                if (parseInt(chatContainer.style.width) < 300) {
+                    chatContainer.style.width = '300px';
+                }
+                if (parseInt(chatContainer.style.height) < 200) {
+                    chatContainer.style.height = '200px';
+                }
+            }
+
+            function stopResize() {
+                window.removeEventListener('mousemove', resize);
+                window.removeEventListener('mouseup', stopResize);
+            }
+        });
+    });
+}
+
+
+function addResizeHandles(chatContainer) {
+    const resizers = document.createElement('div');
+    resizers.classList.add('resizers');
+
+    // Crear los ocho resizers para las esquinas y lados
+    const resizerPositions = ['top-left', 'top', 'top-right', 'right', 'bottom-right', 'bottom', 'bottom-left', 'left'];
+
+    resizerPositions.forEach(position => {
+        const resizer = document.createElement('div');
+        resizer.classList.add('resizer', position);
+        resizers.appendChild(resizer);
+    });
+
+    chatContainer.appendChild(resizers);
 }
 
 function createChatHeader(chatId, chatTitle, models) {
