@@ -2,7 +2,7 @@ function openChat(chatId, chatTitle) {
     const chatContainersWrapper = document.getElementById('chatContainersWrapper');
 
     if (document.getElementById(`chat-container-${chatId}`)) {
-        alert(`El chat con ID ${chatId} ya está abierto.`);
+        alert(`${chatTitle} ya está abierto.`);
         return;
     }
 
@@ -51,6 +51,7 @@ function createChatHeader(chatId, chatTitle, models) {
     // Crear el título del chat y añadirlo al encabezado
     const headerTitle = document.createElement('div');
     headerTitle.classList.add('chat-title');
+    headerTitle.id = `chat-title-${chatId}`;
     headerTitle.textContent = chatTitle;
     chatHeader.appendChild(headerTitle);
 
