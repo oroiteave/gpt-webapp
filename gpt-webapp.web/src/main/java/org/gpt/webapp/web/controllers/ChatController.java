@@ -68,6 +68,10 @@ public class ChatController {
 	public String getModel(@PathVariable Long chatId) {
 		return chatFacade.getChatById(chatId).getModel();
 	}
+	@GetMapping("/{chatId}/title")
+	public String getTitleById(@PathVariable Long chatId) {
+		return chatFacade.getChatById(chatId).getTitle();
+	}
 	
 	@DeleteMapping("/delete")
 	public void deleteChat(@RequestParam String id) {

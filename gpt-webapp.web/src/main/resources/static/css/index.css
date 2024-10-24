@@ -24,25 +24,22 @@ body {
 }
 
 .chat-header {
-   background-color: #333;
+    position: relative; /* Necesario para que los hijos con posición absoluta se posicionen respecto a este contenedor */
+    background-color: #333;
     padding: 10px;
     color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative; /* Para posicionamiento absoluto del título */
-    cursor: move; /* Habilita mover el chat */
-    height: 40px; 
+    cursor: move;
+    height: 40px;
 }
 
 .chat-title {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    text-align: center;
-    font-weight: bold;
-    z-index: 0; /* Para que no se superponga sobre el selector o el botón de cerrar */
-    white-space: nowrap; /* Ajustar para espacio entre el selector y el título */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%; /* Ajusta este valor según sea necesario */
 }
 
 .chat-messages {
@@ -259,9 +256,12 @@ body {
 }
 
 .close-chat {
+    position: absolute;
+    right: 10px; /* Posiciona el botón de cerrar a la derecha */
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
     color: #ccc;
-    z-index: 1;
 }
 
 .close-chat:hover {
@@ -269,11 +269,10 @@ body {
 }
 
 .model-selector {
-    margin-right: 10px;
+    position: absolute;
+    left: 10px; /* Posiciona el selector a la izquierda */
+    top: 50%;
+    transform: translateY(-50%);
     background-color: #333;
     color: #fff;
-    border: none;
-    padding: 5px;
-    border-radius: 5px;
-    z-index: 1;
 }
