@@ -126,7 +126,12 @@ function enableTitleEditing(chatItem) {
 }
 
 function updateChatTitle(chatItem, newTitle) {
-    chatItem.innerHTML = `${newTitle}`;
+    chatItem.textContent = '';
+    
+
+    // Crear un nodo de texto para el nuevo título
+    const titleTextNode = document.createTextNode(newTitle);
+    chatItem.appendChild(titleTextNode);
 
     // Crear el ícono de edición (lápiz)
     const editIcon = document.createElement('i');
@@ -153,9 +158,11 @@ function updateChatTitle(chatItem, newTitle) {
         }
     });
 
+    // Añadir los íconos al chatItem
     chatItem.appendChild(editIcon);
     chatItem.appendChild(deleteIcon);
 
+    // Actualizar el título en el backend
     const params = new URLSearchParams();
     params.append("title", newTitle);
     params.append("chatId", chatItem.dataset.chatId);
@@ -167,9 +174,12 @@ function updateChatTitle(chatItem, newTitle) {
         },
         body: params.toString()
     }).then(() => {
+        const headerTitle = document.getElementById(`chat-title-${chatItem.dataset.chatId}`);
+        headerTitle.textContent = newTitle;
         console.log(`Chat con ID ${chatItem.dataset.chatId} actualizado a: ${newTitle}`);
     }).catch(error => console.error('Error actualizando el título:', error));
 }
+
 
 document.querySelectorAll('.edit-icon').forEach(function(editIcon) {
     const chatItem = editIcon.closest('li');
