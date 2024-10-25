@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.gpt.webapp.core.facades.UserFacade;
 import org.gpt.webapp.persistence.entities.User;
+import org.gpt.webapp.web.utils.PasswordSecurityEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,10 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/session")
 public class SessionController {
 	private static final String LOGGED_IN_USER_ATTR = "loggedInUser";
+	
+	@Autowired
+	private PasswordSecurityEncoder passwordSecurityEncoder;
+	
 	@Autowired
 	private UserFacade userFacade;
 	
@@ -53,7 +58,7 @@ public class SessionController {
 		if(user == null) {
 			return "No existe un usuario con ese email";
 		}
-		if(!user.getPassword().equals(password)) {
+		if(!passwordSecurityEncoder.checkPassword(password, user.getPassword())) {
 			return "La contraseña es incorrecta";
 		}
 		return null;

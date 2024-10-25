@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.gpt.webapp.core.facades.UserFacade;
 import org.gpt.webapp.persistence.entities.User;
+import org.gpt.webapp.web.utils.PasswordSecurityEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,9 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/user")
 public class UserController {
 	private static final String LOGGED_IN_USER_ATTR = "loggedInUser";
+	
+	@Autowired
+	private PasswordSecurityEncoder passwordSecurityEncoder;
 	
 	@Autowired
 	private UserFacade userFacade;
@@ -44,7 +48,7 @@ public class UserController {
         	return;
         }
 		
-		System.out.println("funciona");
+		user.setPassword(passwordSecurityEncoder.encoder(password));
 		userFacade.saveUser(user);
 		response.sendRedirect("/sign-in.html");
 	}

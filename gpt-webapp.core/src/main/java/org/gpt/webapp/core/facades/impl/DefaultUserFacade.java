@@ -1,5 +1,6 @@
 package org.gpt.webapp.core.facades.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.gpt.webapp.core.facades.UserFacade;
@@ -32,5 +33,10 @@ public class DefaultUserFacade implements UserFacade{
 	@Override
 	public Optional<User> getUserByEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return userRepository.findAll();
 	}
 }
