@@ -12,8 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 public class Message {
@@ -22,7 +20,7 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "event_timestamp", columnDefinition = "TIMESTAMP")
 	private LocalDateTime eventTimestamp;
 	
 	@ManyToOne

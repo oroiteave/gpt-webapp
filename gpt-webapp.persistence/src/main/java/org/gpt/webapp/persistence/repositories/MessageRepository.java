@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message,Long>{
-	Optional<List<Message>> findByChatId(Long chatId);
+	Optional<List<Message>> findByChatIdOrderByEventTimestampAsc(Long chatId);
 }

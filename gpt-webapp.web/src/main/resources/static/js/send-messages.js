@@ -1,38 +1,44 @@
-let isSendingMessage = false;
+let isSendingMessage = {};
+
 function sendMessage(chatId) {
     const userMessageInput = document.getElementById(`chat-input-${chatId}`);
     const messageText = userMessageInput.value.trim();
     
-    if (isSendingMessage || messageText === '') return;
+    if (messageText === '') return;
 
-    // Bloquear el envío de nuevos mensajes
-    isSendingMessage = true;
+    if (isSendingMessage[chatId]) return;
+
+    // Bloquear el envío de nuevos mensajes para este chat
+    isSendingMessage[chatId] = true;
     
     const params = new URLSearchParams();
-    params.append("message",messageText);
-    params.append("chatId",chatId);
+    params.append("message", messageText);
+    params.append("chatId", chatId);
     
-    if (messageText !== '') {
-        userMessageInput.value = '';
-        // Agregar el mensaje del usuario al chat
-        addMessageToChat(messageText, 'user',chatId);
+    userMessageInput.value = '';
+    // Agregar el mensaje del usuario al chat
+    addMessageToChat(messageText, 'user', chatId);
 
-        fetch('/messages/sendPrompt', {
-		method: 'POST',
-		headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-		body: params.toString()
-		})
-		.then(response => response.text())
-		.then(data => {
-			addMessageToChat(data, 'assistant',chatId);
-	        isSendingMessage = false;
-		}).catch(error => {console.error('Error fetching the test', error)
-			isSendingMessage = false;
-		});
-    }
+    fetch('/messages/sendPrompt', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params.toString()
+    })
+    .then(response => response.text())
+    .then(data => {
+        addMessageToChat(data, 'assistant', chatId);
+        // Desbloquear el envío de mensajes para este chat
+        isSendingMessage[chatId] = false;
+    })
+    .catch(error => {
+        console.error('Error fetching the test', error);
+        // Desbloquear el envío de mensajes para este chat en caso de error
+        isSendingMessage[chatId] = false;
+    });
 }
+
 
 function addMessageToChat(message, sender, chatId) {
     const chatMessages = document.getElementById(`chat-messages-${chatId}`);

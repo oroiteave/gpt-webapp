@@ -1,5 +1,6 @@
 package org.gpt.webapp.core.facades.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.gpt.webapp.core.facades.MessageFacade;
@@ -21,6 +22,6 @@ public class DefaultMessageFacade implements MessageFacade{
 
 	@Override
 	public List<Message> getMessagesByChatId(Long chatId) {
-		return (messageRepository.findByChatId(chatId)).get();
+		return (messageRepository.findByChatIdOrderByEventTimestampAsc(chatId)).orElse(Collections.emptyList());
 	}
 }

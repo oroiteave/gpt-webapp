@@ -73,7 +73,7 @@ public class MessageRepositoryTest {
     
     @Test
     void testShouldFindMessagesByChatId() {
-    	Optional<List<Message>> foundMessage = messageRepository.findByChatId(testChat.getId());
+    	Optional<List<Message>> foundMessage = messageRepository.findByChatIdOrderByEventTimestampAsc(testChat.getId());
     	assertThat(foundMessage.isPresent());
     	assertThat(foundMessage.get().get(0).getId()).isGreaterThan(0);
     	assertThat(foundMessage.get().get(0).getContent()).isEqualTo("hola mundo");
