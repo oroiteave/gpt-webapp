@@ -27,7 +27,7 @@ public class AuthenticationFilter  implements Filter {
         boolean loggedIn = (session != null && session.getAttribute(LOGGED_IN_USER_ATTR) != null);
 
         String requestURI = httpRequest.getRequestURI();
-        if (!loggedIn && requestURI.endsWith("index.html")) {
+        if (!loggedIn && requestURI.endsWith("/index.html")) {
             httpResponse.sendRedirect("/sign-in.html");
             return; 
         }
