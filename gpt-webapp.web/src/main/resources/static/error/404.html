@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Página no encontrada</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .error-container {
+            text-align: center;
+        }
+
+        .error-container h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .error-container p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .error-container button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .error-container button:hover {
+            background-color: #555;
+        }
+
+        .error-container i {
+            font-size: 100px;
+            margin-bottom: 20px;
+            color: #ff5555;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h1>Error 404</h1>
+        <p>Página no encontrada</p>
+        <button onclick="window.location.href='index.html'">Volver al inicio</button>
+    </div>
+</body>
+</html>
