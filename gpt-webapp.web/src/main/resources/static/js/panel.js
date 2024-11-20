@@ -1,6 +1,6 @@
 async function fetchAndRenderChats() {
     try {
-        const response = await fetch('/chat/list');
+        const response = await fetch('/multi-gpt/chat/list');
         if (!response.ok) {
             throw new Error('Error al obtener la lista de chats');
         }
@@ -65,7 +65,7 @@ function addChatToTop(chatId, chatTitle) {
     newChatItem.appendChild(deleteIcon);
 
     newChatItem.addEventListener('click', function() {
-		fetch(`/chat/${chatId}/title`)
+		fetch(`/multi-gpt/chat/${chatId}/title`)
 		.then(response => response.text())
 		.then(title => {
 	        openChat(chatId, title);
@@ -80,14 +80,14 @@ function deleteChat(chatItem) {
     const chatId = chatItem.dataset.chatId;
     chatItem.remove();
 
-	fetch(`/chat/delete?id=${chatId}`,{
+	fetch(`/multi-gpt/chat/delete?id=${chatId}`,{
 		method: 'DELETE'
 	}).catch(error => console.error('Error al eliminar el chat',error));
     console.log(`Chat con ID ${chatId} eliminado`);
 }
 
 document.getElementById('addChatBtn').addEventListener('click', function() {
-	fetch('/chat/create', {
+	fetch('/multi-gpt/chat/create', {
 		method: 'POST'
 	})
 	.then(response => response.json())
@@ -165,7 +165,7 @@ function updateChatTitle(chatItem, newTitle) {
     params.append("title", newTitle);
     params.append("chatId", chatItem.dataset.chatId);
     
-    fetch('/chat/title', {
+    fetch('/multi-gpt/chat/title', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

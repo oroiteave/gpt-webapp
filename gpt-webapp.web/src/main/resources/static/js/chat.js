@@ -188,7 +188,7 @@ function createModelSelector(chatId, models) {
         const params = new URLSearchParams();
         params.append("model", modelSelector.value);
         params.append("chatId", chatId);
-        fetch('/chat/model', {
+        fetch('/multi-gpt/chat/model', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -242,7 +242,7 @@ function createChatInputArea(chatId) {
 }
 
 function loadChatModel(chatId, modelSelector, models) {
-    fetch(`/chat/${chatId}/model`)
+    fetch(`/multi-gpt/chat/${chatId}/model`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error al obtener el modelo del chat con ID ${chatId}`);
@@ -287,7 +287,7 @@ function closeChat(chatId) {
 function loadMessages(chatId) {
     const chatMessages = document.getElementById(`chat-messages-${chatId}`);
     
-	fetch(`/messages/${chatId}/getMessages`)
+	fetch(`/multi-gpt/messages/${chatId}/getMessages`)
 	.then(response => response.json())
 	.then(messages => {
 	    chatMessages.textContent = '';

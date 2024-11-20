@@ -19,7 +19,7 @@ function sendMessage(chatId) {
     // Agregar el mensaje del usuario al chat
     addMessageToChat(messageText, 'user', chatId);
 
-    fetch('/messages/sendPrompt', {
+    fetch('/multi-gpt/messages/sendPrompt', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
