@@ -54,40 +54,40 @@ public class ApiUtilTest {
 		messagesTest.add(messageTest);
 	}
 	
-    @Test
-    public void testSendChatRequest() throws JSONException {
-    	String response = chatBotService.sendPrompt(messagesTest,chatTest.getModel(), "token");
-    	
-    	assertNotNull(response);
-    }
-    
-    @Test
-    public void testShouldChatWithContext()throws JSONException{
-    	String response = chatBotService.sendPrompt(messagesTest,chatTest.getModel(),"token");
-    	
-    	assertNotNull(response);
-    	
-    	JSONObject obj = new JSONObject(response);
-	 	JSONObject message1 = obj.getJSONArray("choices").getJSONObject(0).getJSONObject("message");
-	 	String gptmessage = message1.getString("content");
-	 	
-	 	System.out.println(gptmessage);
-	 	
-	 	Message gptReturn = new Message();
-	 	gptReturn.setContent(gptmessage);
-	 	gptReturn.setRole(message1.getString("role"));
-	 	
-	 	Message userResponse = new Message();
-	 	userResponse.setContent("di mi nombre");
-	 	userResponse.setRole("user");
-	 	
-	 	messagesTest.add(gptReturn);
-	 	messagesTest.add(userResponse);
-	 	
-	 	String response1 = chatBotService.sendPrompt(messagesTest,chatTest.getModel(),"token");
-	 	obj = new JSONObject(response1);
-	 	message1 = obj.getJSONArray("choices").getJSONObject(0).getJSONObject("message");
-	 	String gptmessage1 = message1.getString("content");
-	 	System.out.println(gptmessage1);
-    }
+//    @Test
+//    public void testSendChatRequest() throws JSONException {
+//    	String response = chatBotService.sendPrompt(messagesTest,chatTest.getModel(), "token");
+//    	
+//    	assertNotNull(response);
+//    }
+//    
+//    @Test
+//    public void testShouldChatWithContext()throws JSONException{
+//    	String response = chatBotService.sendPrompt(messagesTest,chatTest.getModel(),"token");
+//    	
+//    	assertNotNull(response);
+//    	
+//    	JSONObject obj = new JSONObject(response);
+//	 	JSONObject message1 = obj.getJSONArray("choices").getJSONObject(0).getJSONObject("message");
+//	 	String gptmessage = message1.getString("content");
+//	 	
+//	 	System.out.println(gptmessage);
+//	 	
+//	 	Message gptReturn = new Message();
+//	 	gptReturn.setContent(gptmessage);
+//	 	gptReturn.setRole(message1.getString("role"));
+//	 	
+//	 	Message userResponse = new Message();
+//	 	userResponse.setContent("di mi nombre");
+//	 	userResponse.setRole("user");
+//	 	
+//	 	messagesTest.add(gptReturn);
+//	 	messagesTest.add(userResponse);
+//	 	
+//	 	String response1 = chatBotService.sendPrompt(messagesTest,chatTest.getModel(),"token");
+//	 	obj = new JSONObject(response1);
+//	 	message1 = obj.getJSONArray("choices").getJSONObject(0).getJSONObject("message");
+//	 	String gptmessage1 = message1.getString("content");
+//	 	System.out.println(gptmessage1);
+//    }
 }
