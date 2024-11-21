@@ -44,13 +44,13 @@ public class UserController {
 		
 		if(validateMessage!=null) {
         	session.setAttribute("errorMessage", validateMessage);
-        	response.sendRedirect("/sign-up.html");
+        	response.sendRedirect("/multi-gpt/sign-up.html");
         	return;
         }
 		
 		user.setPassword(passwordSecurityEncoder.encoder(password));
 		userFacade.saveUser(user);
-		response.sendRedirect("/sign-in.html");
+		response.sendRedirect("/multi-gpt/sign-in.html");
 	}
 	
 	@PutMapping("/token")
