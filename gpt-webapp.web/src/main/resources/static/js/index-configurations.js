@@ -3,7 +3,7 @@ const logoutBtn = document.getElementById('logoutBtn');
 const userTokenInput = document.getElementById('userToken');
 
 document.addEventListener('DOMContentLoaded', function () {
-	fetch('/user/token').then(response => {
+	fetch('/multi-gpt/user/token').then(response => {
     if (response.ok) {
         return response.text();  // Obtener el texto directamente sin analizar como JSON
     } else {
@@ -20,7 +20,7 @@ saveTokenBtn.addEventListener('click', function () {
     const userToken = userTokenInput.value;
     const params = new URLSearchParams();
     params.append("userToken",userToken);
-    fetch('/user/token', {
+    fetch('/multi-gpt/user/token', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'

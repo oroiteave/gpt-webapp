@@ -17,3 +17,5 @@
 
 .project
 .settings/
+
+/gpt-webapp.web/src/main/resources/application.properties

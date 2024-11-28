@@ -35,7 +35,7 @@ public class SessionController {
 		if(session != null) {
 			session.invalidate();
 		}
-		response.sendRedirect("/sign-in.html");
+		response.sendRedirect("/multi-gpt/sign-in.html");
 	}
 	
 	@PostMapping("/login")
@@ -45,13 +45,13 @@ public class SessionController {
 		
 		if(errorMessage!=null) {
 			session.setAttribute("errorMessage", errorMessage);
-			response.sendRedirect("/sign-in.html");
+			response.sendRedirect("/multi-gpt/sign-in.html");
 			return;
 		}
 		
 		session.setAttribute(LOGGED_IN_USER_ATTR, user);
 			session.setAttribute("errorMessage", "");
-			response.sendRedirect("/index.html");
+			response.sendRedirect("/multi-gpt/index.html");
 			return;
 	}
 	private String validateSignIn(User user,String password) {
