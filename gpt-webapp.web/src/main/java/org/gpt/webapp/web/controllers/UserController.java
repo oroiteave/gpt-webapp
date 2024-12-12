@@ -28,7 +28,7 @@ public class UserController {
 	@Autowired
 	private UserFacade userFacade;
 	
-	@GetMapping("current")
+	@GetMapping("/current")
 	public ResponseEntity<User> getUser(HttpSession session) {
 		User user = (session != null) ? ((User) session.getAttribute(LOGGED_IN_USER_ATTR)) : null;
 		return ResponseEntity.ok(user);
