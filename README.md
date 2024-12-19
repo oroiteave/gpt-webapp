@@ -1,4 +1,4 @@
-# Interfaz Web para Chat con Modelos GPT
+# Web interface for multiple chats with gpt models
 
 To test the app from a tokenized account you can use these credentials:
 
