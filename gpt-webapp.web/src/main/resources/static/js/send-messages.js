@@ -28,6 +28,20 @@ function sendMessage(chatId) {
     })
     .then(response => response.text())
     .then(data => {
+		try {
+            // Intentar analizar el contenido como JSON
+            const parsedData = JSON.parse(data);
+
+            // Verificar si es el error esperado
+            if (parsedData.status === 500 && parsedData.error === "Internal Server Error" && parsedData.path === "/multi-gpt/messages/sendPrompt") {
+                // Mostrar notificación personalizada
+                alert("Error del servidor: Verifica tu clave de usuario.");
+                isSendingMessage[chatId] = false;
+                return;
+            }
+        } catch (e) {
+            // No es JSON, continuar como mensaje normal
+        }
         addMessageToChat(data, 'assistant', chatId);
         // Desbloquear el envío de mensajes para este chat
         isSendingMessage[chatId] = false;
