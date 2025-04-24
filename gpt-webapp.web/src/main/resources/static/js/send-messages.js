@@ -35,7 +35,8 @@ function sendMessage(chatId) {
             // Verificar si es el error esperado
             if (parsedData.status === 500 && parsedData.error === "Internal Server Error" && parsedData.path === "/multi-gpt/messages/sendPrompt") {
                 // Mostrar notificación personalizada
-                alert("Error del servidor: Verifica tu clave de usuario.");
+                showErrorNotification("Error con el token");
+                //alert("error con el token");
                 isSendingMessage[chatId] = false;
                 return;
             }
